@@ -1,27 +1,8 @@
-sud is a daemon to execute interactive and non-interactive processes with 
-special (and customizable) permissions
+sud (superuser daemon) permits a user to switch to root privileges 
+and to use a suid program in a nosuid environment. It is based on a 
+client/server model and on the ability to pass file descriptors 
+between processes. sud permits you to choose your authentication method, 
+and your effective credentials will be checked by using a Unix domain socket.
 
-this program gives the following advantages:
-- you can switch to root privileges on a remote machine and keep its disks 
-  mounted with nosuid flag
-- you don't have permission to read the socket unless you're in the authgroup 
-- user identification will be authenticated via unix socket
-- you can drop privileges and use sud to implement a suid program in a nosuid 
-  environment
-- you can log access for a particular program or file, even if it wasn't
-  created with logging facilities
 
-  typical permissions for a suipfile are: 	
-	-r-x------  1 root  bin  12288 Aug  5 12:25 /usr/sbin/ilogin
- 
-Thanks go to:
 
-	Luca Memini	<dreams@cuore.org>
-	Marco Pennelli	<heart@disastro.cuore.org>
-
-	for testing and for accounts on their hosts
-
-	s0ftpj staff 
-	cuore.org
-
-	for hosting and suggestions
