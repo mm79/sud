@@ -1,0 +1,513 @@
+# Makefile.in generated automatically by automake 1.5 from Makefile.am.
+
+# Copyright 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001
+# Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+@SET_MAKE@
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+INSTALL_HEADER = $(INSTALL_DATA)
+transform = @program_transform_name@
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+AMTAR = @AMTAR@
+AWK = @AWK@
+CC = @CC@
+DEPDIR = @DEPDIR@
+EXEEXT = @EXEEXT@
+INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+LEX = @LEX@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+YACC = @YACC@
+am__include = @am__include@
+am__quote = @am__quote@
+install_sh = @install_sh@
+
+AM_YFLAGS = -d
+
+sbin_PROGRAMS = sud
+sud_SOURCES = conf.c conf_parser.y conf_lexer.l interactive.c noninteractive.c control.c main.c popen.c request.c session.c service.c utility.c extern.h conf.h control.h queue.h session.h
+sud_CFLAGS = -Wall -DYY_NO_UNPUT
+
+#INCLUDES = -I..
+CLEANFILES = conf_lexer.c conf_parser.h conf_parser.c
+subdir = sud
+mkinstalldirs = $(SHELL) $(top_srcdir)/config/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/autoconf.h
+CONFIG_CLEAN_FILES =
+sbin_PROGRAMS = sud$(EXEEXT)
+PROGRAMS = $(sbin_PROGRAMS)
+
+am_sud_OBJECTS = sud-conf.$(OBJEXT) sud-conf_parser.$(OBJEXT) \
+	sud-conf_lexer.$(OBJEXT) sud-interactive.$(OBJEXT) \
+	sud-noninteractive.$(OBJEXT) sud-control.$(OBJEXT) \
+	sud-main.$(OBJEXT) sud-popen.$(OBJEXT) sud-request.$(OBJEXT) \
+	sud-session.$(OBJEXT) sud-service.$(OBJEXT) \
+	sud-utility.$(OBJEXT)
+sud_OBJECTS = $(am_sud_OBJECTS)
+sud_LDADD = $(LDADD)
+sud_DEPENDENCIES =
+sud_LDFLAGS =
+
+DEFS = @DEFS@
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+depcomp = $(SHELL) $(top_srcdir)/config/depcomp
+@AMDEP_TRUE@DEP_FILES = $(DEPDIR)/sud-conf.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sud-conf_lexer.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sud-conf_parser.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sud-control.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sud-interactive.Po $(DEPDIR)/sud-main.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sud-noninteractive.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sud-popen.Po $(DEPDIR)/sud-request.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sud-service.Po $(DEPDIR)/sud-session.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sud-utility.Po
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+CFLAGS = @CFLAGS@
+LEXCOMPILE = $(LEX) $(LFLAGS) $(AM_LFLAGS)
+YACCCOMPILE = $(YACC) $(YFLAGS) $(AM_YFLAGS)
+DIST_SOURCES = $(sud_SOURCES)
+DIST_COMMON = Makefile.am Makefile.in conf_lexer.c conf_parser.c \
+	conf_parser.h
+SOURCES = $(sud_SOURCES)
+
+all: all-am
+
+.SUFFIXES:
+.SUFFIXES: .c .l .o .obj .y
+$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+	cd $(top_srcdir) && \
+	  $(AUTOMAKE) --gnu  sud/Makefile
+Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_HEADERS= CONFIG_LINKS= \
+	  CONFIG_FILES=$(subdir)/$@ $(SHELL) ./config.status
+install-sbinPROGRAMS: $(sbin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(sbindir)
+	@list='$(sbin_PROGRAMS)'; for p in $$list; do \
+	  p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  if test -f $$p \
+	  ; then \
+	    f=`echo $$p1|sed '$(transform);s/$$/$(EXEEXT)/'`; \
+	   echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(sbindir)/$$f"; \
+	   $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(sbindir)/$$f; \
+	  else :; fi; \
+	done
+
+uninstall-sbinPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(sbin_PROGRAMS)'; for p in $$list; do \
+	  f=`echo $$p|sed 's/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
+	  echo " rm -f $(DESTDIR)$(sbindir)/$$f"; \
+	  rm -f $(DESTDIR)$(sbindir)/$$f; \
+	done
+
+clean-sbinPROGRAMS:
+	-test -z "$(sbin_PROGRAMS)" || rm -f $(sbin_PROGRAMS)
+sud-conf.$(OBJEXT): conf.c
+conf_parser.h: conf_parser.c
+sud-conf_parser.$(OBJEXT): conf_parser.c
+sud-conf_lexer.$(OBJEXT): conf_lexer.c
+sud-interactive.$(OBJEXT): interactive.c
+sud-noninteractive.$(OBJEXT): noninteractive.c
+sud-control.$(OBJEXT): control.c
+sud-main.$(OBJEXT): main.c
+sud-popen.$(OBJEXT): popen.c
+sud-request.$(OBJEXT): request.c
+sud-session.$(OBJEXT): session.c
+sud-service.$(OBJEXT): service.c
+sud-utility.$(OBJEXT): utility.c
+sud$(EXEEXT): $(sud_OBJECTS) $(sud_DEPENDENCIES) 
+	@rm -f sud$(EXEEXT)
+	$(LINK) $(sud_LDFLAGS) $(sud_OBJECTS) $(sud_LDADD) $(LIBS)
+
+mostlyclean-compile:
+	-rm -f *.$(OBJEXT) core *.core
+
+distclean-compile:
+	-rm -f *.tab.c
+
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-conf.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-conf_lexer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-conf_parser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-control.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-interactive.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-noninteractive.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-popen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-request.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-service.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-session.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sud-utility.Po@am__quote@
+
+distclean-depend:
+	-rm -rf $(DEPDIR)
+
+.c.o:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(COMPILE) -c `test -f $< || echo '$(srcdir)/'`$<
+
+.c.obj:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(COMPILE) -c `cygpath -w $<`
+
+sud-conf.o: conf.c
+@AMDEP_TRUE@	source='conf.c' object='sud-conf.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-conf.Po' tmpdepfile='$(DEPDIR)/sud-conf.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-conf.o `test -f conf.c || echo '$(srcdir)/'`conf.c
+
+sud-conf.obj: conf.c
+@AMDEP_TRUE@	source='conf.c' object='sud-conf.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-conf.Po' tmpdepfile='$(DEPDIR)/sud-conf.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-conf.obj `cygpath -w conf.c`
+
+sud-conf_parser.o: conf_parser.c
+@AMDEP_TRUE@	source='conf_parser.c' object='sud-conf_parser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-conf_parser.Po' tmpdepfile='$(DEPDIR)/sud-conf_parser.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-conf_parser.o `test -f conf_parser.c || echo '$(srcdir)/'`conf_parser.c
+
+sud-conf_parser.obj: conf_parser.c
+@AMDEP_TRUE@	source='conf_parser.c' object='sud-conf_parser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-conf_parser.Po' tmpdepfile='$(DEPDIR)/sud-conf_parser.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-conf_parser.obj `cygpath -w conf_parser.c`
+
+sud-conf_lexer.o: conf_lexer.c
+@AMDEP_TRUE@	source='conf_lexer.c' object='sud-conf_lexer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-conf_lexer.Po' tmpdepfile='$(DEPDIR)/sud-conf_lexer.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-conf_lexer.o `test -f conf_lexer.c || echo '$(srcdir)/'`conf_lexer.c
+
+sud-conf_lexer.obj: conf_lexer.c
+@AMDEP_TRUE@	source='conf_lexer.c' object='sud-conf_lexer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-conf_lexer.Po' tmpdepfile='$(DEPDIR)/sud-conf_lexer.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-conf_lexer.obj `cygpath -w conf_lexer.c`
+
+sud-interactive.o: interactive.c
+@AMDEP_TRUE@	source='interactive.c' object='sud-interactive.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-interactive.Po' tmpdepfile='$(DEPDIR)/sud-interactive.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-interactive.o `test -f interactive.c || echo '$(srcdir)/'`interactive.c
+
+sud-interactive.obj: interactive.c
+@AMDEP_TRUE@	source='interactive.c' object='sud-interactive.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-interactive.Po' tmpdepfile='$(DEPDIR)/sud-interactive.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-interactive.obj `cygpath -w interactive.c`
+
+sud-noninteractive.o: noninteractive.c
+@AMDEP_TRUE@	source='noninteractive.c' object='sud-noninteractive.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-noninteractive.Po' tmpdepfile='$(DEPDIR)/sud-noninteractive.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-noninteractive.o `test -f noninteractive.c || echo '$(srcdir)/'`noninteractive.c
+
+sud-noninteractive.obj: noninteractive.c
+@AMDEP_TRUE@	source='noninteractive.c' object='sud-noninteractive.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-noninteractive.Po' tmpdepfile='$(DEPDIR)/sud-noninteractive.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-noninteractive.obj `cygpath -w noninteractive.c`
+
+sud-control.o: control.c
+@AMDEP_TRUE@	source='control.c' object='sud-control.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-control.Po' tmpdepfile='$(DEPDIR)/sud-control.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-control.o `test -f control.c || echo '$(srcdir)/'`control.c
+
+sud-control.obj: control.c
+@AMDEP_TRUE@	source='control.c' object='sud-control.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-control.Po' tmpdepfile='$(DEPDIR)/sud-control.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-control.obj `cygpath -w control.c`
+
+sud-main.o: main.c
+@AMDEP_TRUE@	source='main.c' object='sud-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-main.Po' tmpdepfile='$(DEPDIR)/sud-main.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-main.o `test -f main.c || echo '$(srcdir)/'`main.c
+
+sud-main.obj: main.c
+@AMDEP_TRUE@	source='main.c' object='sud-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-main.Po' tmpdepfile='$(DEPDIR)/sud-main.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-main.obj `cygpath -w main.c`
+
+sud-popen.o: popen.c
+@AMDEP_TRUE@	source='popen.c' object='sud-popen.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-popen.Po' tmpdepfile='$(DEPDIR)/sud-popen.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-popen.o `test -f popen.c || echo '$(srcdir)/'`popen.c
+
+sud-popen.obj: popen.c
+@AMDEP_TRUE@	source='popen.c' object='sud-popen.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-popen.Po' tmpdepfile='$(DEPDIR)/sud-popen.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-popen.obj `cygpath -w popen.c`
+
+sud-request.o: request.c
+@AMDEP_TRUE@	source='request.c' object='sud-request.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-request.Po' tmpdepfile='$(DEPDIR)/sud-request.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-request.o `test -f request.c || echo '$(srcdir)/'`request.c
+
+sud-request.obj: request.c
+@AMDEP_TRUE@	source='request.c' object='sud-request.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-request.Po' tmpdepfile='$(DEPDIR)/sud-request.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-request.obj `cygpath -w request.c`
+
+sud-session.o: session.c
+@AMDEP_TRUE@	source='session.c' object='sud-session.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-session.Po' tmpdepfile='$(DEPDIR)/sud-session.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-session.o `test -f session.c || echo '$(srcdir)/'`session.c
+
+sud-session.obj: session.c
+@AMDEP_TRUE@	source='session.c' object='sud-session.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-session.Po' tmpdepfile='$(DEPDIR)/sud-session.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-session.obj `cygpath -w session.c`
+
+sud-service.o: service.c
+@AMDEP_TRUE@	source='service.c' object='sud-service.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-service.Po' tmpdepfile='$(DEPDIR)/sud-service.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-service.o `test -f service.c || echo '$(srcdir)/'`service.c
+
+sud-service.obj: service.c
+@AMDEP_TRUE@	source='service.c' object='sud-service.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-service.Po' tmpdepfile='$(DEPDIR)/sud-service.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-service.obj `cygpath -w service.c`
+
+sud-utility.o: utility.c
+@AMDEP_TRUE@	source='utility.c' object='sud-utility.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-utility.Po' tmpdepfile='$(DEPDIR)/sud-utility.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-utility.o `test -f utility.c || echo '$(srcdir)/'`utility.c
+
+sud-utility.obj: utility.c
+@AMDEP_TRUE@	source='utility.c' object='sud-utility.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/sud-utility.Po' tmpdepfile='$(DEPDIR)/sud-utility.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(sud_CFLAGS) $(CFLAGS) -c -o sud-utility.obj `cygpath -w utility.c`
+CCDEPMODE = @CCDEPMODE@
+
+LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
+LEXLIB = @LEXLIB@
+
+.l.c:
+	$(LEXCOMPILE) $< && mv $(LEX_OUTPUT_ROOT).c $@
+
+.y.c:
+	$(YACCCOMPILE) $< && mv y.tab.c $@
+	if test -f y.tab.h; then \
+	  if cmp -s y.tab.h $*.h; then \
+	    rm -f y.tab.h; \
+	  else \
+	    mv y.tab.h $*.h; \
+	  fi; \
+	fi
+uninstall-info-am:
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	mkid -fID $$unique $(LISP)
+
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+		$(TAGS_FILES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || etags $(ETAGS_ARGS) $$tags  $$unique $(LISP)
+
+GTAGS:
+	here=`CDPATH=: && cd $(top_builddir) && pwd` \
+	  && cd $(top_srcdir) \
+	  && gtags -i $(GTAGS_ARGS) $$here
+
+distclean-tags:
+	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH
+
+DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+
+top_distdir = ..
+distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  if test -f $$file; then d=.; else d=$(srcdir); fi; \
+	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \
+	  if test "$$dir" != "$$file" && test "$$dir" != "."; then \
+	    $(mkinstalldirs) "$(distdir)/$$dir"; \
+	  fi; \
+	  if test -d $$d/$$file; then \
+	    cp -pR $$d/$$file $(distdir) \
+	    || exit 1; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || cp -p $$d/$$file $(distdir)/$$file \
+	    || exit 1; \
+	  fi; \
+	done
+check-am: all-am
+check: check-am
+all-am: Makefile $(PROGRAMS)
+
+installdirs:
+	$(mkinstalldirs) $(DESTDIR)$(sbindir)
+
+install: install-am
+install-exec: install-exec-am
+install-data: install-data-am
+uninstall: uninstall-am
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+
+installcheck: installcheck-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
+	  `test -z '$(STRIP)' || \
+	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
+mostlyclean-generic:
+
+clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES) stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+	@echo "This command is intended for maintainers to use"
+	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "conf_parser.h" || rm -f conf_parser.h
+clean: clean-am
+
+clean-am: clean-generic clean-sbinPROGRAMS mostlyclean-am
+
+distclean: distclean-am
+
+distclean-am: clean-am distclean-compile distclean-depend \
+	distclean-generic distclean-tags
+
+dvi: dvi-am
+
+dvi-am:
+
+info: info-am
+
+info-am:
+
+install-data-am:
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
+
+install-exec-am: install-sbinPROGRAMS
+
+install-info: install-info-am
+
+install-man:
+
+installcheck-am:
+
+maintainer-clean: maintainer-clean-am
+
+maintainer-clean-am: distclean-am maintainer-clean-generic
+
+mostlyclean: mostlyclean-am
+
+mostlyclean-am: mostlyclean-compile mostlyclean-generic
+
+uninstall-am: uninstall-info-am uninstall-sbinPROGRAMS
+
+.PHONY: GTAGS all all-am check check-am clean clean-generic \
+	clean-sbinPROGRAMS distclean distclean-compile distclean-depend \
+	distclean-generic distclean-tags distdir dvi dvi-am info \
+	info-am install install-am install-data install-data-am \
+	install-exec install-exec-am install-info install-info-am \
+	install-man install-sbinPROGRAMS install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic tags uninstall uninstall-am \
+	uninstall-info-am uninstall-sbinPROGRAMS
+
+
+install-data-hook:
+	chmod 500 $(sbindir)/sud
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

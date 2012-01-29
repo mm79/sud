@@ -1,0 +1,176 @@
+.TH SUD 1
+.SH NAME
+sud \d- super user daemon
+.SH SYNOPSIS
+.B sud [-n] [-v] [-f \fIconfigfile\fB] [-p \fIpidfile\fB] [-t \fIterminal\fB]
+.SH DESCRIPTION
+sud is a daemon to execute interactive and non-interactive processes with special privileges in a nosuid environment 
+.TP
+Some advantages:
+.PP
+you can switch to root privileges on a remote machine and keep its disks 
+mounted with nosuid flag
+.PP
+you can use your insecure program with root privileges by setting suipfile in 
+/etc/sud.conf
+.PP
+your client will be authenticated by getting effective credentials via unix 
+socket
+.PP
+you can't brute force or try to exploit code unless you're in the authgroup 
+(you don't have permission to open a client connection) 
+.PP
+you can use sud to emulate suidfile in a nosuid environment
+.SH OPTIONS
+The following options are available:
+.TP
+.B -f \fIconfigfile\fB
+parse configfile (default: /etc/sud.conf)
+.TP
+.B -n
+do not daemonize
+.TP
+.B -p \fIpidfile\fB
+pidfile (default: /var/run/sud.pid)
+.TP
+.B -t \fIterminal\fB
+set a default terminal for services
+.TP
+.B -v
+print version
+.SH OPTIONS FOR THE DAEMON
+The following entries are available in /etc/sud.conf in the form options 
+{ entries }
+.TP
+.B daemonize { yes, no }
+calls daemon(3)
+.TP
+.B emergency = \fIfilename\fR
+this is an interactive suipfile which will be called and binded on 
+/var/run/emergency.unix [default: ilogin]
+when:
+there is no services on your configuration file; 
+all sud services were killed
+or there is a mistake on your configuration file.
+This option helps you to manage a remote configuration file by granting a 
+service if an error occurs
+.TP
+.B etries = \fInumber\fR
+this option sets how many times sud will try to execute your emergency session
+this is useful for example if a fork bombing attack occurs while sud is trying
+to bind your emergency service  
+.TP
+.B pidfile = \fIfilename\fR
+locking file to make certain that only a sud program is running for your
+configuration
+you can execute more sud programs by invoking sud with -p and -f options
+.SH ENTRIES FOR SERVICES
+The following entries are available in /etc/sud.conf in the form service 
+{ entry = value ... }
+There is a special service which can be specified for default entries,
+every entry that is not specifed in a particular service will be set to
+default value. Form: default { entries.. }
+.TP
+.B suipfile = \fIfilename\fR
+this is the superuser interface program (by default it is /usr/sbin/ilogin). 
+You can set it to what you want to execute after getting authenticated
+(ex. login, su, sh)
+you can pass arguments using double quotes example: 
+suipfile = "/usr/bin/login -f root"  
+.TP
+.B sockfile = \fIfilename\fR
+the socket file name (full path) (default: /var/run/{service}.unix)
+you can use -p option in suz to connect to this file 
+.TP
+.B utname = \fIstring\fR
+ut_name field in utmp structure. if this is not set, ut_name will be the user 
+specified in setuser or root if it is not set
+this option makes sense only if your service is interactive and dologin is
+specified for your service
+.TP
+.B uthost = \fIstring\fR
+ut_host field in utmp structure. Use this if you want to identify a sud login.
+It accepts double quotes string. default = NULL example: uthost = "sud_auth"
+this options makes sense only if your service is interactive and dologin is
+specified for your service
+.TP
+.B dologin = {yes, no}
+performs login() and logout() functions.
+this is only useful if your service is in interactive mode
+.TP
+.B authgroup = \fIstring\fR
+this is the group for sockfile and is used to verify effective credentials
+if authgroup is set to noauth the sockfile will be accessible to everyone
+and there will not be check on the groups 
+default = 0 (this means gid 0)
+.TP
+.B log = {yes, no}
+report successful authentication. if it is set to "no", only failed 
+authentication will be logged for this service  
+.TP
+.B mode = {interactive, read, write, readwrite} 
+there are various modes which sud can support for your commands.
+.PP
+\fBinteractive\fR mode opens a terminal and emulate a remote environmnent
+for your service; this is useful for programs like login or network services
+.PP
+\fBread\fR mode permits you to execute a program and to give only its output, 
+example: suipfile = "/bin/ls /root" this is useful to emulate suidfile in 
+general; \fBcommand\fR is an alias for this mode
+.PP
+\fBwrite\fR mode permits you to execute a program and to give you a blind mode: 
+you write a command but output is not redirected to your client, \fBblind\fR
+is an alias for this mode
+.PP
+\fBreadwrite\fR is like interactive mode but it doesn't open a pseudo tty, this 
+is useful if you want to execute pipe commands like: 
+echo ls | suz -p /var/run/rwserv -n
+and to redirect standard output 
+.TP
+.B setuser = \fIstring\fR
+this is useful if you want to drop privileges before executing suipfile example:
+setuser=sysadmin
+you can also set user to your uid by using $myuid variable setuser=$myuid
+.TP
+.B seteuser = \fIstring\fR
+seteuser tries to emulate a setuid condition by setting real uid to setuser id 
+and effective, saved uid to seteuser id.
+example: setuser=$myuid seteuser=uucp emulates a setuid uucp file
+seteuser requires setuser 
+.TP
+.B setgroup = \fIstring\fR
+use this option if you want to set suipfile running with this group example:
+setgroup=kmem
+you can also set group to your gid/s by using $mygid variable setgroup=$mygid
+.TP
+.B setegroup = \fIstring\fR
+setegroup tries to emulate a setgid condition by setting real gid to setgroup
+id and effective, saved gid to setegroup id. 
+setegroup requires setgroup
+.TP
+.B pidfile = \fIfilename\fR
+locking file to make certain that only a copy of this service is running on a 
+sockfile
+default: /var/run/{service}.unix
+.TP
+.B nclients = \fInumber\fR
+this is the backlog in listen()
+.TP
+.B terminal = \fIstring\fR
+your terminal emulation for this service
+example: terminal = vt100
+.TP
+.B timeout = \fInumber\fR
+timeout in seconds for a session (default = 0)
+.SH SIGNALS
+SIGUSR1, SIGHUP reparse your configuration file
+.SH FILES
+.IP "\fI/etc/sud.conf\fR"
+\&\fBsud\fR configuration file
+.IP "\fI/var/run/sud.pid\fR"
+\&\fBsud\fR locking file
+.SH SEE ALSO
+.IP "\fIsuz\fR\|(1)"
+sud client 
+.IP "\fIilogin\fR\|(1)"
+super user interface program

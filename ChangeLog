@@ -1,0 +1,68 @@
+V. 1.1
+
+- control channel changed to SOCK_DGRAM and major checks to avoid partial 
+  messages
+- added setenv() for ilogin
+- added /etc/issue.suz and /etc/motd.suz support for ilogin
+- shell used by ilogin is now the root shell according to pw_shell
+
+V. 1.1b
+
+- non-blocking support
+- control channel slightly changed
+- minor bugs and potential bugs corrected
+- FreeBSD support
+
+V. 1.1c
+
+- flex/yacc support (added /etc/sud.conf)
+- directory used by ilogin is now the root dir according to pw_dir
+- NetBSD support (without getpeereid() next sud versions could implement this 
+  via sendmsg())
+  Note: NetBSD support should be considered experimental
+- added session timeout
+
+V. 1.2
+- added linux support
+  (without getpeereid() next sud versions could implement this via sendmsg())
+- added autoconf support
+- added (pidfile and authgroup options)
+
+V. 1.2a
+
+- added double quotes support in suipfile
+- added utmp support
+- added uthost option
+
+V. 1.2b
+
+- added setgroup, setuser, utname
+- sud can be invoked with different configuration file using -f option
+- added setreuid, setregid support
+
+V. 1.2c
+
+this is the first official version
+minor features have been added and some bugs corrected
+
+V. 1.3
+- added multiple services in the same configuration file
+  every service is in the form label { parameters... } 
+- added general daemon options with label = options
+- added general service options with label = default
+- added SO_PEERCRED linux support
+- added SIGHUP, SIGUSR1 support
+- added emergency service
+- fixed timeout support in Linux (value-result)
+  (Posix.1g specifies the const qualifier for timeout in select)
+- signals are now more reliable based on self-pipe trick
+- sessions are now queued in a LIST
+- introduction of three new modes: 
+	. read (aka command)
+	. blind (aka write)
+  	. readwrite
+  these are very useful to emulate setuid programs which don't need a terminal
+  and to redirect stdin and stdout to suipfiles
+- changes in suz client in order to support new modes
+- improvements in SIGWINCH management
+- minor changes and new options for services 

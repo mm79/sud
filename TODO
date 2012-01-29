@@ -1,0 +1,15 @@
+* = high priority
+- = low priority
+
+* to get effective credentials in NetBSD
+* (restricted word expansion in suipfile)
+
+- to improve autoconf support (to avoid unconditional checking) 
+- stderr support for read and readwrite mode
+- porting on other platforms?
+
+Note: feel free to send comments,  improvements or ideas..
+I will try to answer in a few days
+
+Thanks, 
+				- mm mm@cydonia.vpn.cuore.org

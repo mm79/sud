@@ -1,0 +1,66 @@
+# options for the daemon
+
+options {
+	daemonize = yes
+	pidfile = /var/run/sud.pid
+}
+
+# default entry 
+
+default {
+	terminal = xterm
+	nclients = 20
+}
+
+# sockfile will be /var/run/ilogin.unix
+# pidfile will be /var/run/ilogin.pid
+# authgroup will be 0
+ 
+ilogin	{
+		suipfile = /usr/sbin/ilogin
+		nclients = 5
+		timeout = 1000
+	}
+
+login	{
+		suipfile = "/usr/bin/login -f root"
+		dologin = yes
+		timeout = 1000	
+	}
+
+passwd	{
+		suipfile = "/usr/bin/passwd"
+		mode = interactive
+		setuser=$myuid
+		seteuser = root
+		setgroup = $mygid
+		timeout = 300
+		nclients = 20
+}
+
+redirect {
+		suipfile = "/bin/sh"
+		mode = readwrite
+}
+
+write {
+		suipfile = "/bin/sh"
+		mode = write
+}
+
+rootdir {
+		suipfile = "/usr/bin/ls -R /root"
+		mode = command
+}
+
+skey	{
+		suipfile = "/usr/bin/skeyinit -md5"
+		sockfile = /var/run/skey.unix
+		mode = interactive
+		pidfile = /var/run/skey.pid
+		setuser=$myuid
+		setgroup=$mygid
+		seteuser=root
+		timeout = 300
+		nclients = 20
+	}	

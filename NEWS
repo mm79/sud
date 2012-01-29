@@ -1,0 +1,40 @@
+- added multiple services in the same configuration file
+- added SO_PEERCRED linux support
+- other improvements (see ChangeLog)
+-----
+
+configuration file is changed in order to support multiple suipfiles:
+every configuration is in the form:
+
+label {
+	parameters
+}
+
+default is assigned for default entries
+options is assigned for general daemon options
+
+example
+[sud.conf]
+options {
+	daemonize = yes
+	pidfile = /var/run/sud.pid
+	emergency = "login -f root"
+}
+
+default {
+	terminal = vt100
+}
+
+ilogin {
+	suipfile = "/usr/sbin/ilogin"
+	mode = interactive
+	dologin = yes
+}
+
+passwd {
+	suipfile = "/usr/bin/passwd"
+	mode = command
+	setuser = $myuid
+	setgroup = $mygid
+	seteuser = root
+}
