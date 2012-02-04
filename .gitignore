@@ -1,0 +1,8 @@
+*.log
+*.o
+*.scan
+*.status
+*.cache
+*.tgz
+stamp-h*
+*~
