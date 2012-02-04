@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003 Matteo Mazzarella <mm@cydonia.vpn.cuore.org>
+ * Copyright (c) 2012 Matteo Mazzarella <matteo@dancingbear.it>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,7 +65,11 @@ sud_process(struct conf *cfp, int fd, int pipefd) {
 
 #if defined(SO_PEERCRED) && !defined(HAVE_GETPEEREID)
         struct ucred peercred;
+#ifdef HAVE_SOCKLEN_T
+	socklen_t olen = sizeof(struct ucred);
+#else
         int olen = sizeof(struct ucred);
+#endif
 
         if (getsockopt(fd, SOL_SOCKET, SO_PEERCRED, &peercred, &olen) < 0) {
                 syslog(LOG_ERR, "can't get credential via SO_PEERCRED");

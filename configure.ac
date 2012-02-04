@@ -7,6 +7,7 @@ AC_PREFIX_DEFAULT(/usr)
 
 AM_PROG_CC_C_O
 AC_PROG_INSTALL
+AC_GNU_SOURCE
 AC_PROG_YACC
 AM_PROG_LEX
 
@@ -22,6 +23,10 @@ AC_TYPE_SIZE_T
 
 
 AC_DEFINE_UNQUOTED(SUD_PATH_PREFIX, "$ac_default_prefix", "sud prefix installation")
+
+AC_CHECK_TYPE(socklen_t,
+   	      [AC_DEFINE(HAVE_SOCKLEN_T, 1, [Define if you have socklen_t.])],
+	      [], [#include <sys/socket.h>])
 
 AC_CHECK_FUNCS(daemon forkpty)
 AC_CHECK_FUNCS(getpeereid strlcpy)
