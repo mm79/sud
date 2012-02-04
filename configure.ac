@@ -1,7 +1,7 @@
-AC_INIT(sud, 1.3, [matteo@dancingbear.it])
+AC_INIT(sud, 1.3a, [matteo@dancingbear.it])
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR(sud/main.c)
-AM_INIT_AUTOMAKE(sud, 1.3)
+AM_INIT_AUTOMAKE(sud, 1.3a)
 AC_CONFIG_HEADER(autoconf.h)
 AC_PREFIX_DEFAULT(/usr)
 

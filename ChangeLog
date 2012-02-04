@@ -66,3 +66,8 @@ V. 1.3
 - changes in suz client in order to support new modes
 - improvements in SIGWINCH management
 - minor changes and new options for services 
+
+V. 1.3a - [4 Feb 2012] mm 
+- added utmpx support (tested on FreeBSD 9)
+- fixed on debian (ucred struct not found)
+- minor fixes
