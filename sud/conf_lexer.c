@@ -2,14 +2,22 @@
 
 /* Scanner skeleton version:
  * $Header: /home/daffy/u0/vern/flex/RCS/flex.skl,v 2.91 96/09/10 16:58:48 vern Exp $
+ * $FreeBSD: release/9.0.0/usr.bin/lex/flex.skl 214272 2010-10-24 15:31:41Z uqs $
  */
+
+#if defined(__FreeBSD__)
+#include <sys/cdefs.h>
+#else
+#define __unused
+#define __dead2
+#endif
 
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
 
 #include <stdio.h>
-#include <errno.h>
+
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
 #ifdef c_plusplus
@@ -22,15 +30,7 @@
 #ifdef __cplusplus
 
 #include <stdlib.h>
-#ifndef _WIN32
 #include <unistd.h>
-#else
-#ifndef YY_ALWAYS_INTERACTIVE
-#ifndef YY_NEVER_INTERACTIVE
-extern int isatty YY_PROTO(( int ));
-#endif
-#endif
-#endif
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS
@@ -248,7 +248,7 @@ YY_BUFFER_STATE yy_scan_string YY_PROTO(( yyconst char *yy_str ));
 YY_BUFFER_STATE yy_scan_bytes YY_PROTO(( yyconst char *bytes, int len ));
 
 static void *yy_flex_alloc YY_PROTO(( yy_size_t ));
-static void *yy_flex_realloc YY_PROTO(( void *, yy_size_t ));
+static void *yy_flex_realloc YY_PROTO(( void *, yy_size_t )) __unused;
 static void yy_flex_free YY_PROTO(( void * ));
 
 #define yy_new_buffer yy_create_buffer
@@ -278,7 +278,7 @@ extern char *yytext;
 static yy_state_type yy_get_previous_state YY_PROTO(( void ));
 static yy_state_type yy_try_NUL_trans YY_PROTO(( yy_state_type current_state ));
 static int yy_get_next_buffer YY_PROTO(( void ));
-static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
+static void yy_fatal_error YY_PROTO(( yyconst char msg[] )) __dead2;
 
 /* Done after the current pattern has been matched and before the
  * corresponding action - sets up yytext.
@@ -571,7 +571,7 @@ struct conf *curr_cfg;
 #define DEFAULT 2
 #define DAEMONOPT 3
 
-#line 575 "lex.yy.c"
+#line 575 "conf_lexer.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -671,20 +671,9 @@ YY_MALLOC_DECL
 			YY_FATAL_ERROR( "input in flex scanner failed" ); \
 		result = n; \
 		} \
-	else \
-		{ \
-		errno=0; \
-		while ( (result = fread(buf, 1, max_size, yyin))==0 && ferror(yyin)) \
-			{ \
-			if( errno != EINTR) \
-				{ \
-				YY_FATAL_ERROR( "input in flex scanner failed" ); \
-				break; \
-				} \
-			errno=0; \
-			clearerr(yyin); \
-			} \
-		}
+	else if ( ((result = fread( buf, 1, max_size, yyin )) == 0) \
+		  && ferror( yyin ) ) \
+		YY_FATAL_ERROR( "input in flex scanner failed" );
 #endif
 
 /* No semi-colon after return; correct usage is to write "yyterminate();" -
@@ -729,13 +718,13 @@ YY_MALLOC_DECL
 
 YY_DECL
 	{
-	register yy_state_type yy_current_state;
-	register char *yy_cp, *yy_bp;
-	register int yy_act;
+	yy_state_type yy_current_state;
+	char *yy_cp, *yy_bp;
+	int yy_act;
 
 #line 77 "conf_lexer.l"
 
-#line 739 "lex.yy.c"
+#line 728 "conf_lexer.c"
 
 	if ( yy_init )
 		{
@@ -777,7 +766,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
+			YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
 			if ( yy_accept[yy_current_state] )
 				{
 				yy_last_accepting_state = yy_current_state;
@@ -1082,7 +1071,7 @@ YY_RULE_SETUP
 #line 205 "conf_lexer.l"
 ECHO;
 	YY_BREAK
-#line 1086 "lex.yy.c"
+#line 1075 "conf_lexer.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(PARAM):
 case YY_STATE_EOF(DEFAULT):
@@ -1227,11 +1216,15 @@ case YY_STATE_EOF(DAEMONOPT):
  *	EOB_ACT_END_OF_FILE - end of file
  */
 
+#ifdef YY_USE_PROTOS
+static int yy_get_next_buffer(void)
+#else
 static int yy_get_next_buffer()
+#endif
 	{
-	register char *dest = yy_current_buffer->yy_ch_buf;
-	register char *source = yytext_ptr;
-	register int number_to_move, i;
+	char *dest = yy_current_buffer->yy_ch_buf;
+	char *source = yytext_ptr;
+	int number_to_move, i;
 	int ret_val;
 
 	if ( yy_c_buf_p > &yy_current_buffer->yy_ch_buf[yy_n_chars + 1] )
@@ -1359,16 +1352,20 @@ static int yy_get_next_buffer()
 
 /* yy_get_previous_state - get the state just before the EOB char was reached */
 
+#ifdef YY_USE_PROTOS
+static yy_state_type yy_get_previous_state(void)
+#else
 static yy_state_type yy_get_previous_state()
+#endif
 	{
-	register yy_state_type yy_current_state;
-	register char *yy_cp;
+	yy_state_type yy_current_state;
+	char *yy_cp;
 
 	yy_current_state = yy_start;
 
 	for ( yy_cp = yytext_ptr + YY_MORE_ADJ; yy_cp < yy_c_buf_p; ++yy_cp )
 		{
-		register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
+		YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
 		if ( yy_accept[yy_current_state] )
 			{
 			yy_last_accepting_state = yy_current_state;
@@ -1400,10 +1397,10 @@ static yy_state_type yy_try_NUL_trans( yy_current_state )
 yy_state_type yy_current_state;
 #endif
 	{
-	register int yy_is_jam;
-	register char *yy_cp = yy_c_buf_p;
+	int yy_is_jam;
+	char *yy_cp = yy_c_buf_p;
 
-	register YY_CHAR yy_c = 1;
+	YY_CHAR yy_c = 1;
 	if ( yy_accept[yy_current_state] )
 		{
 		yy_last_accepting_state = yy_current_state;
@@ -1424,14 +1421,14 @@ yy_state_type yy_current_state;
 
 #ifndef YY_NO_UNPUT
 #ifdef YY_USE_PROTOS
-static void yyunput( int c, register char *yy_bp )
+static void yyunput( int c, char *yy_bp )
 #else
 static void yyunput( c, yy_bp )
 int c;
-register char *yy_bp;
+char *yy_bp;
 #endif
 	{
-	register char *yy_cp = yy_c_buf_p;
+	char *yy_cp = yy_c_buf_p;
 
 	/* undo effects of setting up yytext */
 	*yy_cp = yy_hold_char;
@@ -1439,10 +1436,10 @@ register char *yy_bp;
 	if ( yy_cp < yy_current_buffer->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		register int number_to_move = yy_n_chars + 2;
-		register char *dest = &yy_current_buffer->yy_ch_buf[
+		int number_to_move = yy_n_chars + 2;
+		char *dest = &yy_current_buffer->yy_ch_buf[
 					yy_current_buffer->yy_buf_size + 2];
-		register char *source =
+		char *source =
 				&yy_current_buffer->yy_ch_buf[number_to_move];
 
 		while ( source > yy_current_buffer->yy_ch_buf )
@@ -1467,10 +1464,15 @@ register char *yy_bp;
 #endif	/* ifndef YY_NO_UNPUT */
 
 
+#ifndef YY_NO_INPUT
 #ifdef __cplusplus
 static int yyinput()
 #else
+#ifdef YY_USE_PROTOS
+static int input(void)
+#else
 static int input()
+#endif
 #endif
 	{
 	int c;
@@ -1538,6 +1540,7 @@ static int input()
 
 	return c;
 	}
+#endif	/* ifndef YY_NO_INPUT */
 
 
 #ifdef YY_USE_PROTOS
@@ -1649,13 +1652,9 @@ YY_BUFFER_STATE b;
 	}
 
 
-#ifndef _WIN32
-#include <unistd.h>
-#else
 #ifndef YY_ALWAYS_INTERACTIVE
 #ifndef YY_NEVER_INTERACTIVE
 extern int isatty YY_PROTO(( int ));
-#endif
 #endif
 #endif
 
@@ -1845,7 +1844,11 @@ int new_state;
 
 
 #ifndef YY_NO_POP_STATE
+#ifdef YY_USE_PROTOS
+static void yy_pop_state(void)
+#else
 static void yy_pop_state()
+#endif
 	{
 	if ( --yy_start_stack_ptr < 0 )
 		YY_FATAL_ERROR( "start-condition stack underflow" );
@@ -1856,7 +1859,11 @@ static void yy_pop_state()
 
 
 #ifndef YY_NO_TOP_STATE
+#ifdef YY_USE_PROTOS
+static int yy_top_state(void)
+#else
 static int yy_top_state()
+#endif
 	{
 	return yy_start_stack[yy_start_stack_ptr - 1];
 	}
@@ -1907,7 +1914,7 @@ yyconst char *s2;
 int n;
 #endif
 	{
-	register int i;
+	int i;
 	for ( i = 0; i < n; ++i )
 		s1[i] = s2[i];
 	}
@@ -1921,7 +1928,7 @@ static int yy_flex_strlen( s )
 yyconst char *s;
 #endif
 	{
-	register int n;
+	int n;
 	for ( n = 0; s[n]; ++n )
 		;
 
