@@ -12,6 +12,9 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
+/* Define to 1 if you have the <lastlog.h> header file. */
+#undef HAVE_LASTLOG_H
+
 /* Define to 1 if you have the <libutil.h> header file. */
 #undef HAVE_LIBUTIL_H
 
@@ -48,17 +51,35 @@
 /* Define to 1 if you have the `strlcpy' function. */
 #undef HAVE_STRLCPY
 
+/* Define to 1 if you have the <sys/param.h> header file. */
+#undef HAVE_SYS_PARAM_H
+
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
 
+/* Define to 1 if you have the <sys/termios.h> header file. */
+#undef HAVE_SYS_TERMIOS_H
+
 /* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <termios.h> header file. */
+#undef HAVE_TERMIOS_H
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
 /* Define to 1 if you have the <util.h> header file. */
 #undef HAVE_UTIL_H
+
+/* Define to 1 if you have the <utmpx.h> header file. */
+#undef HAVE_UTMPX_H
+
+/* Define to 1 if you have the <utmp.h> header file. */
+#undef HAVE_UTMP_H
+
+/* Define to 1 if your C compiler doesn't accept -c and -o together. */
+#undef NO_MINUS_C_MINUS_O
 
 /* Name of package */
 #undef PACKAGE
@@ -74,6 +95,9 @@
 
 /* Define to the one symbol short name of this package. */
 #undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
@@ -100,7 +124,7 @@
 /* Define to `int' if <sys/types.h> does not define. */
 #undef pid_t
 
-/* Define to `unsigned' if <sys/types.h> does not define. */
+/* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef size_t
 
 /* Define to `int' if <sys/types.h> doesn't define. */

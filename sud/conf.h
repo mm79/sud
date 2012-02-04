@@ -32,10 +32,7 @@
 #include <grp.h>
 
 #include "queue.h"
-/*
- * XXX: have* variables are oversized, perhaps these could be implemented using
- * for example gid_t negative values
- */
+
 struct conf {
 	char	*session,
 		*suipfile,

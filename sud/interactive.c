@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003 Matteo Mazzarella <mm@cydonia.vpn.cuore.org>
+ * Copyright (c) 2012 Matteo Mazzarella <matteo@dancingbear.it>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +58,11 @@
 #ifdef HAVE_UTIL_H
 #include <util.h>
 #endif
+#ifdef HAVE_UTMP_H
 #include <utmp.h>
+#elif HAVE_UTMPX_H
+#include <utmpx.h>
+#endif
 
 #include "conf.h"
 #include "control.h"
@@ -274,9 +278,16 @@ exec_shell(struct conf *cfp, int fd, int parentfd)
 	pid_t pid;
 	char line[MAXPATHLEN];	
 	char *tty;
+#ifdef HAVE_UTMP_H
 	struct utmp ut;
+#elif HAVE_UTMPX_H
+	struct utmpx ut;
+	struct timeval tv;
+#endif
 
+#if defined(HAVE_UTMP_H) || defined(HAVE_UTMPX_H)
 	memset(&ut, 0, sizeof(ut));
+#endif
 
 	if (pipe(pipechld) < 0) {
 		syslog(LOG_ERR, "exec_shell() pipe %m");
@@ -298,28 +309,58 @@ exec_shell(struct conf *cfp, int fd, int parentfd)
         	tty += 5;
        	else
        		tty = line;
-
+#if defined(HAVE_UTMP_H) || defined(HAVE_UTMPX_H)
 	if (cfp->utmp) {
-		if (cfp->utname)
+		if (cfp->utname) {
+#ifdef HAVE_UTMP_H
                 	(void)strncpy(ut.ut_name, cfp->utname, 
-				sizeof(ut.ut_name));
-		else {
+				sizeof(ut.ut_name)-1);
+			ut.ut_name[sizeof(ut.ut_name)-1] = '\0';
+#elif HAVE_UTMPX_H
+			(void)strncpy(ut.ut_user, cfp->utname,
+				sizeof(ut.ut_user)-1);
+			ut.ut_user[sizeof(ut.ut_user)-1] = '\0';
+#endif
+		} else {
 			struct passwd *pw;
 			pw = get_pwentry(cfp->havesetuser ? cfp->setuser : \
 				0);
-
+#ifdef HAVE_UTMP_H
 			(void)strncpy(ut.ut_name, pw->pw_name, 
-				sizeof(ut.ut_name)); 
+				sizeof(ut.ut_name)-1); 
+
+			ut.ut_name[sizeof(ut.ut_name)-1] = '\0';
+#elif HAVE_UTMPX_H
+			(void)strncpy(ut.ut_user, pw->pw_name,
+				sizeof(ut.ut_user)-1);
+
+			ut.ut_user[sizeof(ut.ut_user)-1] = '\0';
+#endif
 		}
     
-		(void)strncpy(ut.ut_line, tty, sizeof(ut.ut_line));
+		(void)strncpy(ut.ut_line, tty, sizeof(ut.ut_line)-1);
+		ut.ut_line[sizeof(ut.ut_line)-1] = '\0';
 
-		if (cfp->uthost)
+		if (cfp->uthost) {
 			(void)strncpy(ut.ut_host, cfp->uthost, 
-				sizeof(ut.ut_host));
-	
+				sizeof(ut.ut_host)-1);
+			ut.ut_host[sizeof(ut.ut_host)-1] = '\0';
+		}
+#ifdef HAVE_UTMP_H	
 		(void)time(&ut.ut_time);	
+#elif HAVE_UTMPX_H 
+		(void)gettimeofday(&tv, NULL);
+		ut.ut_tv.tv_sec = tv.tv_sec;
+		ut.ut_tv.tv_usec = tv.tv_usec;
+
+		(void)strncpy(ut.ut_id, ut.ut_line, sizeof(ut.ut_id)-1);
+		ut.ut_line[sizeof(ut.ut_line)-1] = '\0';
+
+		ut.ut_pid = getpid();
+		ut.ut_type = USER_PROCESS;
+#endif
 	}
+#endif
 
         /*
          * overwriting signal disposition
@@ -337,7 +378,12 @@ exec_shell(struct conf *cfp, int fd, int parentfd)
 		(void)close(master);
                	(void)close(fd);	
 		(void)login_tty(slave);
+#ifdef HAVE_UTMP_H
 		login(&ut);
+#elif HAVE_UTMPX_H
+		setutxent();
+		pututxline(&ut);
+#endif
 
 		set_privileges(cfp);		
 
@@ -371,14 +417,27 @@ exec_shell(struct conf *cfp, int fd, int parentfd)
 			syslog(LOG_ERR, "can't open ctrl chan");
 			exit_status = 1;
 		}
-
+#if defined(HAVE_UTMP_H) || defined(HAVE_UTMPX_H)
 		if (cfp->utmp) {
+#ifdef HAVE_UTMP_H
 			if (!logout(tty)) { 
 				syslog(LOG_ERR, "unable to logout on %s", tty);
 				exit_status = 1;
 			} else
 				logwtmp(tty, "", "");
+#elif HAVE_UTMPX_H
+			ut.ut_type = DEAD_PROCESS;
+			(void)gettimeofday(&tv, NULL);
+			ut.ut_tv.tv_sec = tv.tv_sec;
+			ut.ut_tv.tv_usec = tv.tv_usec;
+
+			(void)memset(&ut.ut_user, 0, sizeof(ut.ut_user));	
+			setutxent();
+			(void)pututxline(&ut);
+			endutxent();
+#endif
 		}
+#endif
 
 		cleanup(line);
 		_exit(exit_status);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003 Matteo Mazzarella <mm@cydonia.vpn.cuore.org>
+ * Copyright (c) 2012 Matteo Mazzarella <matteo@dancingbear.it>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,11 @@
  */
 
 #include <sys/param.h>
+#ifdef HAVE_TERMIOS_H
+#include <termios.h>
+#elif HAVE_SYS_TERMIOS_H
 #include <sys/termios.h>
+#endif
 #ifdef HAVE_PTY_H 
 #include <pty.h>
 #endif
