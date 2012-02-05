@@ -382,7 +382,7 @@ exec_shell(struct conf *cfp, int fd, int parentfd)
 		login(&ut);
 #elif HAVE_UTMPX_H
 		setutxent();
-		pututxline(&ut);
+		(void)pututxline(&ut);
 #endif
 
 		set_privileges(cfp);		
@@ -433,7 +433,12 @@ exec_shell(struct conf *cfp, int fd, int parentfd)
 
 			(void)memset(&ut.ut_user, 0, sizeof(ut.ut_user));	
 			setutxent();
-			(void)pututxline(&ut);
+			if (pututxline(&ut) == NULL) {
+				syslog(LOG_ERR, 
+					"unable to logout on %s (utmpx)",
+					tty);
+				exit_status = 1;
+			}	
 			endutxent();
 #endif
 		}
